@@ -1,0 +1,83 @@
+pragma ever-solidity  ^0.64.0;
+pragma AbiHeader expire;
+// pragma AbiHeader pubkey;
+
+
+contract WalletFactory {
+
+    uint64 static _nonce;
+
+    TvmCell everWalletCode;
+    uint64 deployed_count;
+
+    
+
+    struct WalletInfo {
+        uint128 amount;
+        uint64 nonce;
+    }
+
+    modifier reserve() {
+        tvm.rawReserve(1 ever, 0);
+        _;
+    }
+
+    constructor(TvmCell _everWalletCode) public {
+        tvm.accept();
+
+        everWalletCode = _everWalletCode;
+    }
+
+
+    function batchEverWalletDeploy(
+        uint64 _index,
+        uint128 _balance,
+        uint256 _publicKey,
+        uint64 _count
+    ) external reserve {
+        uint64 takeUntil = math.min(_index + 200, _count);
+
+        for (uint64 i = _index; i < takeUntil; i++) {
+            _everWalletDeployInternal(i, _balance, _publicKey);
+        }
+
+        if (takeUntil < _count) {
+            WalletFactory(address(this))
+                .batchEverWalletDeploy{
+                    value: 0,
+                    flag: 128,
+                    bounce: false
+                }(takeUntil, _balance, _publicKey, _count);
+        }
+    }
+
+    function _everWalletDeployInternal(
+        uint64 _index,
+        uint128 _balance,
+        uint256 _publicKey
+    ) private {
+        TvmCell data = abi.encode(_publicKey, _index);
+
+        TvmCell stateInit = tvm.buildStateInit(everWalletCode, data);
+        address wallet = address(tvm.hash(stateInit));
+
+        wallet.transfer({
+            stateInit: stateInit,
+            value: _balance,
+            flag: 1,
+            bounce: false
+        });
+        deployed_count++;
+    }
+
+    function get_wallet(uint64 _index, uint256 _publicKey) external view returns( address receiver ) {
+        TvmCell data = abi.encode(_publicKey, _index);
+
+        TvmCell stateInit = tvm.buildStateInit(everWalletCode, data);
+        return address(tvm.hash(stateInit));
+    } 
+
+    function get_deployed() external view returns( uint64 deployed) {
+        return deployed_count;
+    }
+}

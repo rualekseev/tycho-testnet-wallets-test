@@ -1,0 +1,8 @@
+.env
+.nekroddos/
+node_modules/
+wallet-deployer/.env
+wallet-deployer/deployments/
+wallet-deployer/.cache/
+wallet-deployer/.temp/
+.idea/

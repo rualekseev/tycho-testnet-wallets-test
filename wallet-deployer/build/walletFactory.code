@@ -1,0 +1,508 @@
+.version sol 0.64.0
+
+.macro constructor
+DROP
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7_with_init_storage$
+}
+GETGLOB 6
+THROWIF 51
+LDREF
+ENDS
+.loc ../contracts/walletFactory.tsol, 26
+ACCEPT
+.loc ../contracts/walletFactory.tsol, 28
+SETGLOB 11
+.loc ../contracts/walletFactory.tsol, 0
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro batchEverWalletDeploy
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/walletFactory.tsol, 32
+OVER
+PUSHCONT {
+	LDU 64
+	LDU 128
+	LDREF
+	ENDS
+	CTOS
+}
+PUSHCONT {
+	LDU 64
+	LDU 128
+}
+IFELSE
+LDU 256
+LDU 64
+ENDS
+.loc ../contracts/walletFactory.tsol, 0
+CALLREF {
+	CALL $batchEverWalletDeploy_a2047bca_internal_macro$
+}
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro batchEverWalletDeploy_a2047bca_internal_macro
+.loc ../contracts/walletFactory.tsol, 21
+PUSHINT 1000000000
+PUSHINT 0
+RAWRESERVE
+.loc ../contracts/walletFactory.tsol, 38
+PUSH S3
+PUSHINT 200
+ADD
+UFITS 64
+OVER
+MIN
+.loc ../contracts/walletFactory.tsol, 40
+ROLL 4
+PUSHCONT {
+	PUSH2 S0, S1
+	LESS
+}
+PUSHCONT {
+	.loc ../contracts/walletFactory.tsol, 41
+	PUSH3 S0, S4, S3
+	CALLREF {
+		CALL $_everWalletDeployInternal_f4a4a7e5_internal_macro$
+	}
+	.loc ../contracts/walletFactory.tsol, 40
+	INC
+	UFITS 64
+	.loc ../contracts/walletFactory.tsol, 0
+}
+WHILE
+DROP
+.loc ../contracts/walletFactory.tsol, 44
+PUSH2 S0, S1
+LESS
+PUSHCONT {
+	.loc ../contracts/walletFactory.tsol, 45
+	PUSH3 S1, S2, S3
+	PUSH S3
+	MYADDR
+	FALSE
+	NEWC
+	STSLICECONST x6_
+	STI 1
+	STSLICECONST x1_
+	STSLICE
+	PUSHINT 1
+	STUR 111
+	ROLLREV 4
+	NEWC
+	STSLICECONST x5fcc0b93
+	STU 64
+	STU 128
+	STU 256
+	STU 64
+	STBREFR
+	ENDC
+	PUSHPOW2 7
+	SENDRAWMSG
+	.loc ../contracts/walletFactory.tsol, 0
+}
+IF
+.loc ../contracts/walletFactory.tsol, 0
+BLKDROP 4
+
+.globl	_everWalletDeployInternal_f4a4a7e5_internal
+.type	_everWalletDeployInternal_f4a4a7e5_internal, @function
+CALL $_everWalletDeployInternal_f4a4a7e5_internal_macro$
+
+.macro _everWalletDeployInternal_f4a4a7e5_internal_macro
+.loc ../contracts/walletFactory.tsol, 59
+XCHG S1, S2
+NEWC
+STU 256
+STU 64
+ENDC
+.loc ../contracts/walletFactory.tsol, 61
+GETGLOB 11
+NEWC
+STSLICECONST x2_
+STOPTREF
+STOPTREF
+STZERO
+ENDC
+.loc ../contracts/walletFactory.tsol, 62
+DUP
+HASHCU
+NEWC
+STSLICECONST x801_
+STU 256
+ENDC
+CTOS
+.loc ../contracts/walletFactory.tsol, 64
+XCHG S1, S2
+NEWC
+STSLICECONST x42_
+STSLICE
+SWAP
+STGRAMS
+PUSHINT 3
+STUR 107
+XCPU S1, S0
+CALLREF {
+	CTOS
+	LDI 1
+	SWAP
+	PUSHCONT {
+		LDI 5
+		NIP
+	}
+	IF
+	LDI 1
+	SWAP
+	PUSHCONT {
+		LDI 2
+		NIP
+	}
+	IF
+	LDOPTREF
+	LDOPTREF
+	LDDICT
+	ENDS
+	BLKDROP 3
+}
+STREFR
+STSLICECONST 0
+ENDC
+PUSHINT 1
+SENDRAWMSG
+.loc ../contracts/walletFactory.tsol, 70
+GETGLOB 12
+INC
+UFITS 64
+SETGLOB 12
+.loc ../contracts/walletFactory.tsol, 0
+
+.macro get_wallet
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/walletFactory.tsol, 73
+OVER
+PUSHCONT {
+	LDU 64
+	LDREF
+	ENDS
+	CTOS
+}
+PUSHCONT {
+	LDU 64
+}
+IFELSE
+LDU 256
+ENDS
+.loc ../contracts/walletFactory.tsol, 0
+CALLREF {
+	CALL $get_wallet_5d94f51e_internal_macro$
+}
+OVER
+PUSHCONT {
+	PUSH S3
+	CTOS
+	LDU 2
+	LDMSGADDR
+	DROP
+	NIP
+	NEWC
+	STSLICECONST xc
+	STSLICE
+	PUSHINT 1
+	STUR 98
+	SWAP
+	NEWC
+	STSLICECONST xaba33307
+	STSLICE
+	STBREFR
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+}
+PUSHCONT {
+	DROP
+}
+IFELSE
+IFREF {
+	CALL $upd_only_time_in_c4$
+}
+THROW 0
+
+.macro get_wallet_5d94f51e_internal_macro
+.loc ../contracts/walletFactory.tsol, 74
+NEWC
+STU 256
+STU 64
+ENDC
+.loc ../contracts/walletFactory.tsol, 76
+GETGLOB 11
+NEWC
+STSLICECONST x2_
+STOPTREF
+STOPTREF
+STZERO
+ENDC
+.loc ../contracts/walletFactory.tsol, 77
+HASHCU
+NEWC
+STSLICECONST x801_
+STU 256
+ENDC
+CTOS
+.loc ../contracts/walletFactory.tsol, 0
+
+.macro get_deployed
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/walletFactory.tsol, 80
+ENDS
+.loc ../contracts/walletFactory.tsol, 0
+CALLREF {
+	CALL $get_deployed_89c09fd0_internal_macro$
+}
+OVER
+PUSHCONT {
+	PUSH S3
+	CTOS
+	LDU 2
+	LDMSGADDR
+	DROP
+	NIP
+	NEWC
+	STSLICECONST xc
+	STSLICE
+	PUSHINT 2679456913
+	STUR 130
+	STU 64
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+}
+PUSHCONT {
+	DROP
+}
+IFELSE
+IFREF {
+	CALL $upd_only_time_in_c4$
+}
+THROW 0
+
+.macro get_deployed_89c09fd0_internal_macro
+.loc ../contracts/walletFactory.tsol, 81
+GETGLOB 12
+.loc ../contracts/walletFactory.tsol, 0
+
+.macro c4_to_c7
+PUSHROOT
+CTOS
+LDU 256 ; pubkey c4
+LDU 64 ; pubkey timestamp c4
+LDU 1 ; ctor flag
+NIP
+LDU 64
+LDREF
+LDU 64
+ENDS
+SETGLOB 12
+SETGLOB 11
+SETGLOB 10
+SETGLOB 3
+SETGLOB 2
+
+.macro c4_to_c7_with_init_storage
+PUSHROOT
+CTOS
+SBITS
+GTINT 1
+PUSHCONT {
+	PUSHINT 0
+	PUSHROOT
+	CTOS
+	PLDDICT ; D
+	PUSHINT 1
+	OVER
+	PUSHINT 64
+	DICTUGET
+	ZEROSWAPIFNOT
+	PUSHCONT {
+		PLDU 64
+	}
+	IF
+	PUSHREF {
+	}
+	PUSHINT 0
+	SETGLOB 12
+	SETGLOB 11
+	SETGLOB 10
+	PUSHINT 64
+	DICTUGET
+	THROWIFNOT 61
+	PLDU 256
+	SETGLOB 2
+	PUSHINT 0 ; timestamp
+	SETGLOB 3
+}
+IFREFELSE {
+	CALL $c4_to_c7$
+}
+
+.macro c7_to_c4
+GETGLOB 12
+GETGLOB 11
+GETGLOB 10
+GETGLOB 3
+GETGLOB 2
+NEWC
+STU 256
+STU 64
+STONE
+STU 64
+STREF
+STU 64
+ENDC
+POPROOT
+
+.macro upd_only_time_in_c4
+PUSHROOT
+CTOS
+LDU 256
+LDU 64
+NIP
+GETGLOB 3
+ROT
+NEWC
+STU 256
+STU 64
+STSLICE
+ENDC
+POPROOT
+
+.internal-alias :main_internal, 0
+.internal :main_internal
+PUSHROOT
+CTOS
+SBITS
+NEQINT 1
+SETGLOB 6
+PUSH S2
+CTOS
+PLDU 4
+MODPOW2 1
+IFRET
+OVER
+SEMPTY ; isEmpty
+IFJMPREF {
+	GETGLOB 6
+	THROWIFNOT 76
+}
+OVER
+LDUQ 32  ; [funcId] body' ok
+THROWIFNOT 60
+OVER
+IFNOTJMPREF {
+	GETGLOB 6
+	THROWIFNOT 76
+}
+SWAP
+CALLREF {
+	CALL $public_function_selector$
+}
+THROW 60
+
+.internal-alias :main_external, -1
+.internal :main_external
+PUSHROOT
+CTOS
+SBITS
+NEQINT 1
+SETGLOB 6
+OVER
+CALLREF {
+	CALL $c4_to_c7_with_init_storage$
+}
+LDU 1 ; haveSign msgSlice
+SWAP
+PUSHCONT {
+	PUSHPOW2 9
+	LDSLICEX
+	DUP
+	MYADDR
+	NEWC
+	STSLICE
+	STSLICE
+	ENDC
+	HASHCU
+	ROT
+	GETGLOB 2
+	CHKSIGNU
+	THROWIFNOT 40
+}
+IF
+LDU 64 ; timestamp msgSlice
+SWAP
+CALL $replay_protection_macro$
+LDU 32 ; expireAt msgSlice
+SWAP
+NOW ; msgSlice expireAt now
+GREATER ; msgSlice expireAt>now
+THROWIFNOT 57
+LDU 32 ; funcId body
+SWAP
+CALLREF {
+	CALL $public_function_selector$
+}
+THROW 60
+
+.macro public_function_selector
+DUP
+PUSHINT 478865691
+EQUAL
+IFJMPREF {
+	CALL $constructor$
+}
+DUP
+PUSHINT 531973265
+EQUAL
+IFJMPREF {
+	CALL $get_deployed$
+}
+DUP
+PUSHINT 732115719
+EQUAL
+IFJMPREF {
+	CALL $get_wallet$
+}
+DUP
+PUSHINT 1607207827
+EQUAL
+IFJMPREF {
+	CALL $batchEverWalletDeploy$
+}
+
